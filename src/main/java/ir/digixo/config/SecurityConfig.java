@@ -11,12 +11,10 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -26,11 +24,10 @@ public class SecurityConfig {
                 .roles("ADMIN")
                 .build();
         UserDetails user2 = User.builder()
-                .username("nasim")
+                .username("bita")
                 .password("1234")
                 .roles("ADMIN")
                 .build();
-
 
         return new InMemoryUserDetailsManager(user1, user2);
     }
@@ -40,11 +37,8 @@ public class SecurityConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-
-    ///
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
 
         http.authorizeHttpRequests(
                         authorizationManagerRequestMatcherRegistry -> {
@@ -53,8 +47,8 @@ public class SecurityConfig {
                 )
                 .formLogin(httpSecurityFormLoginConfigurer -> {
                     httpSecurityFormLoginConfigurer
-                            .loginPage("/showMyLoginform")
-                            .loginProcessingUrl("/login2")
+                            .loginPage("/showMyLoginForm")
+                            .loginProcessingUrl("/loginProcess")
                             .permitAll();
                 })
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.permitAll())
